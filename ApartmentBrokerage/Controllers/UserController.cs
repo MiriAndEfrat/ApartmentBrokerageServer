@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DTO;
+using AutoMapper;
+using Entity;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,40 +17,81 @@ namespace ApartmentBrokerage.Controllers
     public class UserController : ControllerBase
     {
         IUserBL userBL;
-        
+        IMapper mapper;
+
+
         // GET: api/<UserController>
 
-        public UserController(IUserBL userBL)
+        public UserController(IUserBL userBL, IMapper mapper)
         {
             this.userBL = userBL;
+            this.mapper = mapper;
+
         }
 
         [HttpGet]
         public async Task<List<PersonDTO>> Get()
         {
-            return await userBL.GetAll();
+            var people = await userBL.GetAll();
+            var peopleDTO = mapper.Map<List<Person>, List<PersonDTO>>(people);
+            return peopleDTO;
+
         }
 
-        
-        
+
+
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<PersonDTO> Get(int id)
         {
-            return "value";
+            var person = await userBL.GetById(id);
+            var personDTO = mapper.Map<Person, PersonDTO>(person);
+            return personDTO;
+            
+        }
+
+        // GET api/<UserController>/5/123
+        [HttpGet("{identity_number}/{password}")]
+        public async Task<PersonDTO> Get(int identity_number, string password)
+        {
+            var person = await userBL.GetByIdNumberAndPassword(identity_number, password);
+            var personDTO = mapper.Map<Person, PersonDTO>(person);
+            return personDTO;
+
         }
 
         // POST api/<UserController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task Post([FromBody] PersonDTO personDTO)
         {
+            Person person=mapper.Map<PersonDTO,Person>(personDTO);
+            List<int> userType = personDTO.UserType;
+            //foreach (var i in personDTO.UserType)
+            //{
+            //    user.Add(new User { PersonId = personDTO.Id, UserTypeId = i });
+            //}
+
+
+            await userBL.PostUser(person, userType);
+            //await userBL.PostUser(person);
+
         }
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //public async Task Put(int id, [FromBody] PersonDTO personDTO)
+        //{
+        //    Person person = mapper.Map<PersonDTO, Person>(personDTO);
+        //    List<User> user = new List<User>();
+        //    foreach (var i in personDTO.UserType)
+        //    {
+        //        user.Add(new User { PersonId = personDTO.Id, UserTypeId = i });
+        //    }
+
+
+        //    await userBL.PutUser(id, person, user);
+
+        //}
 
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]

@@ -14,7 +14,7 @@ namespace ApartmentBrokerage
         {
             CreateMap<Person, PersonDTO>()
             .ForMember(dest => dest.UserType,
-                       opts => opts.MapFrom(src =>src.Users.Select(u=>u.UserTypeId).ToList()));
+                       opts => opts.MapFrom(src =>src.Users.Select(u=>u.UserTypeId).ToList())).ReverseMap();
         }
 
         

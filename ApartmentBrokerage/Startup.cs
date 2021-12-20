@@ -47,14 +47,16 @@ namespace ApartmentBrokerage
 
 
             services.AddDbContext<ApartmentBrokerageContext>(options => options.UseSqlServer(
-               "Server=mbyserver2\\pupils;Database=Manager;Trusted_Connection=True;"), ServiceLifetime.Scoped);
+               "Server=srv2\\pupils;Database=ApartmentBrokerage;Trusted_Connection=True;"), ServiceLifetime.Scoped);
 
             services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,ILogger<Startup> logger)
         {
+
+            logger.LogInformation("server is up");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

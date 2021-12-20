@@ -11,5 +11,9 @@ namespace DL
     {
 
         public Task<List<Person>> GetAll();
+
+        public Task<Person> GetById(int id);
+        public Task<Person> GetByIdNumberAndPassword(int identity_number, string password);
+        public Task<Person> PostPerson(Person person);
     }
 }

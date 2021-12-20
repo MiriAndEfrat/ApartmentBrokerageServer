@@ -21,5 +21,24 @@ namespace DL
         {
             return await data.People.ToListAsync();
         }
+
+        public async Task<Person> GetById(int id)
+        {
+            return await data.People.Where(person => person.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<Person> GetByIdNumberAndPassword(int identity_number, string password)
+        {
+            return await data.People.Where(person => person.IdentityNumber.Equals(identity_number)&&person.Password.Equals(password)).FirstOrDefaultAsync();
+        }
+
+        public async Task<Person> PostPerson(Person person)
+        {
+            await data.People.AddAsync(person);
+            await data.SaveChangesAsync();
+            return await data.People.FindAsync(person.IdentityNumber);
+           
+        }
+
     }
 }

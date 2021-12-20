@@ -16,6 +16,17 @@ namespace DL
         {
             this.data=data;
         }
-        
+
+
+        public async Task PostUser(List<User> user)
+        {
+            foreach(var u in user)
+            {
+                await data.Users.AddAsync(u);
+                await data.SaveChangesAsync();
+            }
+            
+
+        }
     }
 }

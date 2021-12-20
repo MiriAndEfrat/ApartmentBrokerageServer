@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DL;
+﻿using DL;
 using DTO;
 using Entity;
 using System;
@@ -15,20 +14,44 @@ namespace BL
     {
         IUserDL userDL;
         IPersonDL personDL;
-        IMapper mapper;
 
-        public UserBL(IUserDL userDL, IPersonDL personDL,IMapper mapper)
+        public UserBL(IUserDL userDL, IPersonDL personDL)
         {
             this.userDL = userDL;
             this.personDL = personDL;
-            this.mapper = mapper;
         }
 
-        public async Task<List<PersonDTO>> GetAll()
+        public async Task<List<Person>> GetAll()
         {
-            var people = await personDL.GetAll();
-            var peopleDTO = mapper.Map<List<Person>, List<PersonDTO>>(people);
-            return peopleDTO;
+            return await personDL.GetAll();
+        }
+
+
+        public async Task<Person> GetById(int id)
+        {
+            return await personDL.GetById(id);
+            
+        }
+
+        public async Task<Person> GetByIdNumberAndPassword(int identity_number, string password)
+        {
+            return await personDL.GetByIdNumberAndPassword(identity_number,password);
+        }
+
+        public async Task PostUser(Person person,List<int> userType)
+        {
+            Person p=await personDL.PostPerson(person);
+
+            List<User> user = new List<User>();
+            foreach (var i in userType)
+            {
+                user.Add(new User { PersonId = p.Id, UserTypeId = i });
+            }
+
+
+            await userDL.PostUser(user);
+
+            //await userDL.PostUser(user);
 
         }
 

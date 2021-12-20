@@ -11,7 +11,8 @@ namespace DL
     public interface IUserDL
     {
 
+        public Task PostUser(List<User> user);
 
-        
+
     }
 }
