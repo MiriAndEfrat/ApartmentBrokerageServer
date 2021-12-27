@@ -44,6 +44,7 @@ namespace ApartmentBrokerage.Controllers
         public void Post([FromBody] SubscriptionPerUser subscription, [FromBody] SubscriberPropertyDetail propertyDetail)
         {
 
+
         }
 
         //// PUT api/<SubscriptionPerUserController>/5
