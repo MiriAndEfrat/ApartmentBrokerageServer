@@ -12,6 +12,8 @@ namespace DL
     {
 
         public Task PostUser(List<User> user);
+        public Task PutUser(int id, List<User> user);
+
 
 
     }

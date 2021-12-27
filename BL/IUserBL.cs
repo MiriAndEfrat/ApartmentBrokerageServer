@@ -15,5 +15,6 @@ namespace BL
         public Task<Person> GetById(int id);
         public Task<Person> GetByIdNumberAndPassword(int identity_number, string password);
         public Task PostUser(Person person,List<int>userType);
+        public Task PutUser(int id, Person person, List<User> userType);
     }
 }

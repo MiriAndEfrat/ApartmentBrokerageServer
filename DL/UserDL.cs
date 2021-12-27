@@ -20,12 +20,29 @@ namespace DL
 
         public async Task PostUser(List<User> user)
         {
-            foreach(var u in user)
+            foreach (var u in user)
             {
                 await data.Users.AddAsync(u);
-                await data.SaveChangesAsync();
             }
-            
+
+            await data.SaveChangesAsync();
+
+        }
+
+
+        public async Task PutUser(int id,List<User> user)
+        {
+            List<User> userType =await data.Users.Where(a=>a.Id==id).ToListAsync();
+            foreach (var u in userType)
+            {
+                data.Users.Remove(u);
+            }
+            foreach (var u in user)
+            {
+                await data.Users.AddAsync(u);               
+            }
+
+            await data.SaveChangesAsync();
 
         }
     }

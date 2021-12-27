@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace ApartmentBrokerage
 {
@@ -43,11 +44,14 @@ namespace ApartmentBrokerage
             services.AddScoped(typeof(IUserBL), typeof(UserBL));
             services.AddScoped(typeof(IUserDL), typeof(UserDL));
             services.AddScoped(typeof(IPersonDL), typeof(PersonDL));
+            
+            services.AddScoped(typeof(ISubscriptionPerUserBL), typeof(SubscriptionPerUserBL));
+            services.AddScoped(typeof(ISubscriptionPerUserDL), typeof(SubscriptionPerUserDL));
 
 
 
             services.AddDbContext<ApartmentBrokerageContext>(options => options.UseSqlServer(
-               "Server=srv2\\pupils;Database=ApartmentBrokerage;Trusted_Connection=True;"), ServiceLifetime.Scoped);
+               Configuration.GetConnectionString("srv2\\pupils")), ServiceLifetime.Scoped);
 
             services.AddAutoMapper(typeof(Startup));
         }

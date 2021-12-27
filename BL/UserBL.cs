@@ -51,7 +51,14 @@ namespace BL
 
             await userDL.PostUser(user);
 
-            //await userDL.PostUser(user);
+
+        }
+
+        public async Task PutUser(int id,Person person, List<User> userType)
+        {
+
+            await personDL.PutPerson(id,person);
+            await userDL.PutUser(id,userType);
 
         }
 

@@ -40,5 +40,13 @@ namespace DL
            
         }
 
+        public async Task PutPerson(int id,Person person)
+        {
+            Person p = await data.People.FindAsync(id);
+            data.Entry(p).CurrentValues.SetValues(person);
+            await data.SaveChangesAsync();
+
+        }
+
     }
 }
