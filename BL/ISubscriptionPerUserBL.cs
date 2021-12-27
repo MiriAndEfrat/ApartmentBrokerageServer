@@ -10,6 +10,8 @@ namespace BL
     public interface ISubscriptionPerUserBL
     {
         public Task<List<SubscriptionPerUser>> GetSubscriptionsById(int id);
+        public Task<int> PostSubscriptionPerUser(SubscriptionPerUser subscription);
+
 
     }
 }

@@ -10,5 +10,7 @@ namespace DL
     public interface ISubscriptionPerUserDL
     {
         public Task<List<SubscriptionPerUser>> GetSubscriptionsById(int id);
+        public Task<int> PostSubscriptionPerUser(SubscriptionPerUser subscription);
+
     }
 }

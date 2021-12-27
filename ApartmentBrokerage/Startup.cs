@@ -48,6 +48,10 @@ namespace ApartmentBrokerage///what happen??
             services.AddScoped(typeof(ISubscriptionPerUserBL), typeof(SubscriptionPerUserBL));
             services.AddScoped(typeof(ISubscriptionPerUserDL), typeof(SubscriptionPerUserDL));
 
+            services.AddScoped(typeof(ISubscriberPropertyDetailsBL), typeof(SubscriberPropertyDetailsBL));
+            services.AddScoped(typeof(ISubscriberPropertyDetailsDL), typeof(SubscriberPropertyDetailsDL));
+
+            
 
 
             services.AddDbContext<ApartmentBrokerageContext>(options => options.UseSqlServer(

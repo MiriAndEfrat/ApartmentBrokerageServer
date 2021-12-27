@@ -17,6 +17,7 @@ namespace ApartmentBrokerage.Controllers
     {
 
         ISubscriptionPerUserBL subscriptionPerUserBL;
+        ISubscriberPropertyDetailsBL subscriberPropertyDetailsBL;
         ILogger<UserController> logger;
 
         //// GET: api/<SubscriptionPerUserController>
@@ -26,9 +27,10 @@ namespace ApartmentBrokerage.Controllers
         //    return new string[] { "value1", "value2" };
         //}
 
-        public SubscriptionPerUserController(ISubscriptionPerUserBL subscriptionPerUserBL, ILogger<UserController> logger)
+        public SubscriptionPerUserController(ISubscriptionPerUserBL subscriptionPerUserBL, ISubscriberPropertyDetailsBL subscriberPropertyDetailsBL, ILogger<UserController> logger)
         {
             this.subscriptionPerUserBL = subscriptionPerUserBL;
+            this.subscriberPropertyDetailsBL = subscriberPropertyDetailsBL;
             this.logger = logger;
         }
 
@@ -41,9 +43,11 @@ namespace ApartmentBrokerage.Controllers
 
         // POST api/<SubscriptionPerUserController>
         [HttpPost]
-        public void Post([FromBody] SubscriptionPerUser subscription, [FromBody] SubscriberPropertyDetail propertyDetail)
+        public async Task Post([FromBody] SubscriptionPerUser subscription, [FromBody] SubscriberPropertyDetail propertyDetail)
         {
-
+            int subscriptionPerUser_id=await subscriptionPerUserBL.PostSubscriptionPerUser(subscription);
+            propertyDetail.SubscriptionPerUserId = subscriptionPerUser_id;
+            await subscriberPropertyDetailsBL.PostSubscriberPropertyDetails(propertyDetail);
 
         }
 

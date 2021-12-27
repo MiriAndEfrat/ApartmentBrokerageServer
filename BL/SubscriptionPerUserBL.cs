@@ -22,6 +22,12 @@ namespace BL
             return await subscriptionPerUserDL.GetSubscriptionsById(id);            
         }
 
+        public async Task<int> PostSubscriptionPerUser(SubscriptionPerUser subscription)
+        {
+            return await subscriptionPerUserDL.PostSubscriptionPerUser(subscription);
+
+        }
+
     }
 
 }

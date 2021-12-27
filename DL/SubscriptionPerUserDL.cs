@@ -21,5 +21,15 @@ namespace DL
         {
             return await data.SubscriptionPerUsers.Where(s => s.UserId == id).ToListAsync();
         }
-}
+
+        public async Task<int> PostSubscriptionPerUser(SubscriptionPerUser subscription)
+        {
+            await data.SubscriptionPerUsers.AddAsync(subscription);
+            await data.SaveChangesAsync();
+            var s= await data.SubscriptionPerUsers.FindAsync(subscription);
+            return s.Id;
+
+        }
+
+    }
 }
