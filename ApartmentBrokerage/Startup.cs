@@ -17,7 +17,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
-namespace ApartmentBrokerage
+namespace ApartmentBrokerage///what happen??
 {
     public class Startup
     {
