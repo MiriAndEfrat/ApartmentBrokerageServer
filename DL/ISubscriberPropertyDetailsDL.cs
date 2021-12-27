@@ -9,4 +9,5 @@ namespace DL
     interface ISubscriberPropertyDetailsDL
     {
     }
+
 }
