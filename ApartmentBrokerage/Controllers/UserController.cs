@@ -22,15 +22,14 @@ namespace ApartmentBrokerage.Controllers
         ILogger<UserController> logger;
 
 
-        // GET: api/<UserController>
-
         public UserController(IUserBL userBL, IMapper mapper,ILogger<UserController> logger)
         {
             this.userBL = userBL;
             this.mapper = mapper;
             this.logger = logger;
         }
-
+                
+        // GET: api/<UserController>
         [HttpGet]
         public async Task<List<PersonDTO>> Get()
         {
@@ -38,17 +37,13 @@ namespace ApartmentBrokerage.Controllers
                 var people = await userBL.GetAll();
                 var peopleDTO = mapper.Map<List<Person>, List<PersonDTO>>(people);
                 return peopleDTO;
-
             }
-            catch(Exception ex)
+            catch(Exception e)
             {
                 logger.LogError("server wrong");
             }
             return null;
-
         }
-
-
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
@@ -56,23 +51,21 @@ namespace ApartmentBrokerage.Controllers
         {
             var person = await userBL.GetById(id);
             var personDTO = mapper.Map<Person, PersonDTO>(person);
-            return personDTO;
-            
+            return personDTO;            
         }
 
         // GET api/<UserController>/5/123
         [HttpGet("{identity_number}/{password}")]
-        public async Task<PersonDTO> Get(int identity_number, string password)
+        public async Task<PersonDTO> Get(string identity_number, string password)
         {
             var person = await userBL.GetByIdNumberAndPassword(identity_number, password);
             var personDTO = mapper.Map<Person, PersonDTO>(person);
             return personDTO;
-
         }
 
         // POST api/<UserController>
         [HttpPost]
-        public async Task Post([FromBody] PersonDTO personDTO)
+        public async Task<int> Post([FromBody] PersonDTO personDTO)
         {
             Person person=mapper.Map<PersonDTO,Person>(personDTO);
             List<int> userType = personDTO.UserType;
@@ -80,33 +73,27 @@ namespace ApartmentBrokerage.Controllers
             //{
             //    user.Add(new User { PersonId = personDTO.Id, UserTypeId = i });
             //}
-
-
-            await userBL.PostUser(person, userType);
+            return await userBL.PostUser(person, userType);
             //await userBL.PostUser(person);
-
         }
 
         // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] PersonDTO personDTO)
+        [HttpPut]
+        public async Task Put([FromBody] PersonDTO personDTO)
         {
             Person person = mapper.Map<PersonDTO, Person>(personDTO);
             List<User> user = new List<User>();
             foreach (var i in personDTO.UserType)
             {
-                user.Add(new User { PersonId = personDTO.Id, UserTypeId = i });
+                user.Add(new User { PersonId = person.Id, UserTypeId = i });
             }
-
-
-            await userBL.PutUser(id, person, user);
-
+            await userBL.PutUser(person, user);
         }
 
         // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
     }
 }

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Entity;
+using DTO;
+using AutoMapper;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,6 +21,15 @@ namespace ApartmentBrokerage.Controllers
         ISubscriptionPerUserBL subscriptionPerUserBL;
         ISubscriberPropertyDetailsBL subscriberPropertyDetailsBL;
         ILogger<UserController> logger;
+        IMapper mapper;
+        
+        public SubscriptionPerUserController(ISubscriptionPerUserBL subscriptionPerUserBL, ISubscriberPropertyDetailsBL subscriberPropertyDetailsBL, ILogger<UserController> logger, IMapper mapper)
+        {
+            this.subscriptionPerUserBL = subscriptionPerUserBL;
+            this.subscriberPropertyDetailsBL = subscriberPropertyDetailsBL;
+            this.logger = logger;
+            this.mapper = mapper;
+        }
 
         //// GET: api/<SubscriptionPerUserController>
         //[HttpGet]
@@ -27,12 +38,6 @@ namespace ApartmentBrokerage.Controllers
         //    return new string[] { "value1", "value2" };
         //}
 
-        public SubscriptionPerUserController(ISubscriptionPerUserBL subscriptionPerUserBL, ISubscriberPropertyDetailsBL subscriberPropertyDetailsBL, ILogger<UserController> logger)
-        {
-            this.subscriptionPerUserBL = subscriptionPerUserBL;
-            this.subscriberPropertyDetailsBL = subscriberPropertyDetailsBL;
-            this.logger = logger;
-        }
 
         // GET api/<SubscriptionPerUserController>/5
         [HttpGet("{id}")]
@@ -43,12 +48,14 @@ namespace ApartmentBrokerage.Controllers
 
         // POST api/<SubscriptionPerUserController>
         [HttpPost]
-        public async Task Post([FromBody] SubscriptionPerUser subscription, [FromBody] SubscriberPropertyDetail propertyDetail)
+        public async Task<int> Post([FromBody] SubscriptionAndPropertyDetailsDTO subscriptionAndPropertyDetailsDTO)
         {
-            int subscriptionPerUser_id=await subscriptionPerUserBL.PostSubscriptionPerUser(subscription);
+            var subscription = mapper.Map<SubscriptionAndPropertyDetailsDTO, SubscriptionPerUser>(subscriptionAndPropertyDetailsDTO);
+            var propertyDetail = mapper.Map<SubscriptionAndPropertyDetailsDTO,SubscriberPropertyDetail>(subscriptionAndPropertyDetailsDTO);
+            int subscriptionPerUser_id = await subscriptionPerUserBL.PostSubscriptionPerUser(subscription);
             propertyDetail.SubscriptionPerUserId = subscriptionPerUser_id;
             await subscriberPropertyDetailsBL.PostSubscriberPropertyDetails(propertyDetail);
-
+            return subscriptionPerUser_id;
         }
 
         //// PUT api/<SubscriptionPerUserController>/5

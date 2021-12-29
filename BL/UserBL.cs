@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace BL
 {
 
-    public class UserBL: IUserBL//what now?
+    public class UserBL: IUserBL
     {
         IUserDL userDL;
         IPersonDL personDL;
@@ -26,39 +26,32 @@ namespace BL
             return await personDL.GetAll();
         }
 
-
         public async Task<Person> GetById(int id)
         {
-            return await personDL.GetById(id);
-            
+            return await personDL.GetById(id);            
         }
 
-        public async Task<Person> GetByIdNumberAndPassword(int identity_number, string password)
+        public async Task<Person> GetByIdNumberAndPassword(string identity_number, string password)
         {
             return await personDL.GetByIdNumberAndPassword(identity_number,password);
         }
 
-        public async Task PostUser(Person person,List<int> userType)
+        public async Task<int> PostUser(Person person,List<int> userType)
         {
             Person p=await personDL.PostPerson(person);
-
             List<User> user = new List<User>();
             foreach (var i in userType)
             {
                 user.Add(new User { PersonId = p.Id, UserTypeId = i });
             }
-
-
             await userDL.PostUser(user);
-
-
+            return p.Id;
         }
 
-        public async Task PutUser(int id,Person person, List<User> userType)
+        public async Task PutUser(Person person, List<User> userType)
         {
-
-            await personDL.PutPerson(id,person);
-            await userDL.PutUser(id,userType);
+            await personDL.PutPerson(person);
+            await userDL.PutUser(person.Id, userType);
 
         }
 

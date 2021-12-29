@@ -9,7 +9,7 @@ namespace DTO
     public class PersonDTO
     {
         public int Id { get; set; }
-        public int IdentityNumber { get; set; }
+        public string IdentityNumber { get; set; }
         public int IdentityId { get; set; }
         public int StreetId { get; set; }
         public string Password { get; set; }

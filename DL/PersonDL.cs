@@ -24,10 +24,11 @@ namespace DL
 
         public async Task<Person> GetById(int id)
         {
-            return await data.People.Where(person => person.Id == id).FirstOrDefaultAsync();
+            return await data.People.FindAsync(id);
+            //return await data.People.Where(person => person.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<Person> GetByIdNumberAndPassword(int identity_number, string password)
+        public async Task<Person> GetByIdNumberAndPassword(string identity_number, string password)
         {
             return await data.People.Where(person => person.IdentityNumber.Equals(identity_number)&&person.Password.Equals(password)).FirstOrDefaultAsync();
         }
@@ -36,16 +37,15 @@ namespace DL
         {
             await data.People.AddAsync(person);
             await data.SaveChangesAsync();
-            return await data.People.FindAsync(person.IdentityNumber);
-           
+            return await data.People.Where(p=>p.IdentityNumber.Equals(person.IdentityNumber)).FirstOrDefaultAsync();
+            //return await data.People.FindAsync(person.IdentityNumber);
         }
 
-        public async Task PutPerson(int id,Person person)
+        public async Task PutPerson(Person person)
         {
-            Person p = await data.People.FindAsync(id);
+            Person p = await data.People.FindAsync(person.Id);
             data.Entry(p).CurrentValues.SetValues(person);
             await data.SaveChangesAsync();
-
         }
 
     }

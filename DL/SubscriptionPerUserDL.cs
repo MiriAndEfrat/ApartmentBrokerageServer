@@ -26,9 +26,8 @@ namespace DL
         {
             await data.SubscriptionPerUsers.AddAsync(subscription);
             await data.SaveChangesAsync();
-            var s= await data.SubscriptionPerUsers.FindAsync(subscription);
-            return s.Id;
-
+            var s = await data.SubscriptionPerUsers.MaxAsync(s => s.Id);
+            return s;
         }
 
     }

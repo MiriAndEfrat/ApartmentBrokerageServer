@@ -23,7 +23,12 @@ namespace BL
 
         public async Task<SubscriberPropertyDetail> GetPropertyDetailsBySubscriberId(int id)
         {
-            return subscriberPropertyDetailsDL.GetPropertyDetailsBySubscriberId(id);
+            return await subscriberPropertyDetailsDL.GetPropertyDetailsBySubscriberId(id);
+        }
+
+        public async Task PutPropertyDetails(SubscriberPropertyDetail property)
+        {
+            await subscriberPropertyDetailsDL.PutPropertyDetails(property);
         }
     }
 }

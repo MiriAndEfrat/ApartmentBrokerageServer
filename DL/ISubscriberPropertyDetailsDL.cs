@@ -11,6 +11,8 @@ namespace DL
     {
         public Task PostSubscriberPropertyDetails(SubscriberPropertyDetail propertyDetail);
         public Task<SubscriberPropertyDetail> GetPropertyDetailsBySubscriberId(int id);
+        public Task PutPropertyDetails(SubscriberPropertyDetail property);
+
 
 
     }
