@@ -42,7 +42,7 @@ namespace ApartmentBrokerage///what happen??
             });
 
             services.AddScoped(typeof(IUserBL), typeof(UserBL));
-            services.AddScoped(typeof(IUserDL), typeof(UserDL));
+            services.AddScoped(typeof(IUserDL), typeof(UserDL)); 
             services.AddScoped(typeof(IPersonDL), typeof(PersonDL));
             
             services.AddScoped(typeof(ISubscriptionPerUserBL), typeof(SubscriptionPerUserBL));
