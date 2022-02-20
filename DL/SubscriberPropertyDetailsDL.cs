@@ -10,27 +10,30 @@ namespace DL
 {
     public class SubscriberPropertyDetailsDL: ISubscriberPropertyDetailsDL
     {
-        ApartmentBrokerageContext data;
+        ApartmentBrokerageContext _data;
         public SubscriberPropertyDetailsDL(ApartmentBrokerageContext data)
         {
-            this.data = data;
+            _data = data;
         }
         public async Task PostSubscriberPropertyDetails(SubscriberPropertyDetail propertyDetail)
         {
-            await data.SubscriberPropertyDetails.AddAsync(propertyDetail);
-            await data.SaveChangesAsync();
+            await _data.SubscriberPropertyDetails.AddAsync(propertyDetail);
+            await _data.SaveChangesAsync();
         }
 
         public async Task<SubscriberPropertyDetail> GetPropertyDetailsBySubscriberId(int id)
         {
-            return await data.SubscriberPropertyDetails.Where(property => property.SubscriptionPerUserId == id).FirstOrDefaultAsync();
+            return await _data.SubscriberPropertyDetails.Where(property => property.SubscriptionPerUserId == id).FirstOrDefaultAsync();
         }
 
         public async Task PutPropertyDetails(SubscriberPropertyDetail property)
         {
-            SubscriberPropertyDetail p = await data.SubscriberPropertyDetails.FindAsync(property.Id);
-            data.Entry(p).CurrentValues.SetValues(property);
-            await data.SaveChangesAsync();
+            SubscriberPropertyDetail p = await _data.SubscriberPropertyDetails.FindAsync(property.Id);
+            if (p != null)
+            {
+                _data.Entry(p).CurrentValues.SetValues(property);
+                await _data.SaveChangesAsync();
+            }
         }
     }
 }

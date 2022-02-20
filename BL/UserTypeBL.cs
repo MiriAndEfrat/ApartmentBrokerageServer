@@ -10,26 +10,26 @@ namespace BL
 {
     public class UserTypeBL: IUserTypeBL
     {
-        IUserTypeDL userTypeDL;
+        IUserTypeDL _userTypeDL;
         public UserTypeBL(IUserTypeDL userTypeDL)
         {
-            this.userTypeDL = userTypeDL;
+            _userTypeDL = userTypeDL;
         }
         public async Task<List<UserType>> GetAll()
         {
-            return await userTypeDL.GetAll();
+            return await _userTypeDL.GetAll();
         }
         public async Task PostUserType(UserType userType)
         {
-            await userTypeDL.PostUserType(userType);
+            await _userTypeDL.PostUserType(userType);
         }
         public async Task PutUserType(UserType userType)
         {
-            await userTypeDL.PutUserType(userType);
+            await _userTypeDL.PutUserType(userType);
         }
         public async Task DeleteUserType(int id)
         {
-            await userTypeDL.DeleteUserType(id);
+            await _userTypeDL.DeleteUserType(id);
         }
     }
 }

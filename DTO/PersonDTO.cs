@@ -24,5 +24,7 @@ namespace DTO
         public int Floor { get; set; }
         public int Mailbox { get; set; }
         public List<int> UserType { get; set; }
+
+        public string Token { get; set; }
     }
 }

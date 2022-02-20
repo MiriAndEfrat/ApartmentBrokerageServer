@@ -10,10 +10,11 @@ namespace BL
 {
     public interface IUserBL
     {
-        public Task<List<Person>> GetAll();
-        public Task<Person> GetById(int id);
+        public Task<List<PersonDTO>> GetAll();
+        public Task<PersonDTO> GetById(int id);
         public Task<Person> GetByIdNumberAndPassword(string identity_number, string password);
         public Task<int> PostUser(Person person,List<int>userType);
         public Task PutUser(Person person, List<User> userType);
+        public Task<PersonDTO> PostLogIn(Person user);
     }
 }

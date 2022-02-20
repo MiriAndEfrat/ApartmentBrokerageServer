@@ -10,23 +10,23 @@ namespace DL
 {
     public class SubscriptionPerUserDL: ISubscriptionPerUserDL
     {
-        ApartmentBrokerageContext data;
+        ApartmentBrokerageContext _data;
 
         public SubscriptionPerUserDL(ApartmentBrokerageContext data)
         {
-            this.data = data;
+            _data = data;
         }
 
         public async Task<List<SubscriptionPerUser>> GetSubscriptionsById(int id)
         {
-            return await data.SubscriptionPerUsers.Where(s => s.UserId == id).ToListAsync();
+            return await _data.SubscriptionPerUsers.Where(s => s.UserId == id).ToListAsync();
         }
 
         public async Task<int> PostSubscriptionPerUser(SubscriptionPerUser subscription)
         {
-            await data.SubscriptionPerUsers.AddAsync(subscription);
-            await data.SaveChangesAsync();
-            var s = await data.SubscriptionPerUsers.MaxAsync(s => s.Id);
+            await _data.SubscriptionPerUsers.AddAsync(subscription);
+            await _data.SaveChangesAsync();
+            var s = await _data.SubscriptionPerUsers.MaxAsync(s => s.Id);
             return s;
         }
 

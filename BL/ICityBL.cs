@@ -6,9 +6,10 @@ namespace BL
 {
     public interface ICityBL
     {
-        public Task<List<City>> GetAll();
-        public Task PostCity(City city);
-        public Task PutCity(City city);
-        public Task DeleteCity(int id);
+        Task DeleteCity(int id);
+        Task<List<City>> GetAll();
+        Task<List<City>> GetByAreaId(int id);
+        Task PostCity(City city);
+        Task PutCity(City city);
     }
 }

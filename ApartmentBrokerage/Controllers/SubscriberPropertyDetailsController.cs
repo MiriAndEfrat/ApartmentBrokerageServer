@@ -1,5 +1,6 @@
 ﻿using BL;
 using Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,10 +14,11 @@ namespace ApartmentBrokerage.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SubscriberPropertyDetailsController : ControllerBase
     {
-        ISubscriberPropertyDetailsBL subscriberPropertyDetailsBL;
-        ILogger<UserController> logger;
+        ISubscriberPropertyDetailsBL _subscriberPropertyDetailsBL;
+        ILogger<UserController> _logger;
 
         //// GET: api/<SubscriptionPerUserController>
         //[HttpGet]
@@ -25,12 +27,12 @@ namespace ApartmentBrokerage.Controllers
         //    return new string[] { "value1", "value2" };
         //}
 
-        public SubscriberPropertyDetailsController( ISubscriberPropertyDetailsBL subscriberPropertyDetailsBL, ILogger<UserController> logger)
+        public SubscriberPropertyDetailsController(ISubscriberPropertyDetailsBL subscriberPropertyDetailsBL, ILogger<UserController> logger)
         {
-            this.subscriberPropertyDetailsBL = subscriberPropertyDetailsBL;
-            this.logger = logger;
+            _subscriberPropertyDetailsBL = subscriberPropertyDetailsBL;
+            _logger = logger;
         }
-        
+
         // GET: api/<SubscriberPropertyDetailsController>
         //[HttpGet]
         //public IEnumerable<string> Get()
@@ -42,7 +44,7 @@ namespace ApartmentBrokerage.Controllers
         [HttpGet("{id}")]
         public async Task<SubscriberPropertyDetail> Get(int id)
         {
-            return await subscriberPropertyDetailsBL.GetPropertyDetailsBySubscriberId(id);
+            return await _subscriberPropertyDetailsBL.GetPropertyDetailsBySubscriberId(id);
         }
 
         // POST api/<SubscriberPropertyDetailsController>
@@ -55,7 +57,7 @@ namespace ApartmentBrokerage.Controllers
         [HttpPut]
         public async Task Put([FromBody] SubscriberPropertyDetail property)
         {
-            await subscriberPropertyDetailsBL.PutPropertyDetails(property);
+            await _subscriberPropertyDetailsBL.PutPropertyDetails(property);
         }
 
         // DELETE api/<SubscriberPropertyDetailsController>/5

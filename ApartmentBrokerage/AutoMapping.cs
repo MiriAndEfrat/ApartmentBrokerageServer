@@ -12,9 +12,13 @@ namespace ApartmentBrokerage
     {
         public AutoMapping()
         {
+            //CreateMap<Person, PersonDTO>()
+            //.ForMember(dest => dest.UserType,
+            //           opts => opts.MapFrom(src => src.Users.Where(u=>u.PersonId==src.Id).Select(u => u.UserTypeId).ToList())).ReverseMap();
+
             CreateMap<Person, PersonDTO>()
             .ForMember(dest => dest.UserType,
-                       opts => opts.MapFrom(src =>src.Users.Select(u=>u.UserTypeId).ToList())).ReverseMap();
+                       opts => opts.MapFrom(src => src.Users.Select(u => u.UserTypeId).ToList())).ReverseMap();
 
             CreateMap<SubscriptionPerUser, SubscriptionAndPropertyDetailsDTO>()
             .ForMember(dest => dest.SubscriptionPerUserId,

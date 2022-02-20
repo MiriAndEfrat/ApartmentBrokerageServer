@@ -10,31 +10,37 @@ namespace DL
 {
     public class UserTypeDL: IUserTypeDL
     {
-        ApartmentBrokerageContext data;
+        ApartmentBrokerageContext _data;
         public UserTypeDL(ApartmentBrokerageContext data)
         {
-            this.data = data;
+            _data = data;
         }
         public async Task<List<UserType>> GetAll()
         {
-            return await data.UserTypes.ToListAsync();
+            return await _data.UserTypes.ToListAsync();
         }
         public async Task PostUserType(UserType userType)
         {
-            await data.UserTypes.AddAsync(userType);
-            await data.SaveChangesAsync();
+            await _data.UserTypes.AddAsync(userType);
+            await _data.SaveChangesAsync();
         }
         public async Task PutUserType(UserType userType)
         {
-            UserType u = await data.UserTypes.FindAsync(userType.Id);
-            data.Entry(u).CurrentValues.SetValues(userType);
-            await data.SaveChangesAsync();
+            UserType u = await _data.UserTypes.FindAsync(userType.Id);
+            if (u != null)
+            {
+                _data.Entry(u).CurrentValues.SetValues(userType);
+                await _data.SaveChangesAsync();
+            }
         }
         public async Task DeleteUserType(int id)
         {
-            UserType u = await data.UserTypes.FindAsync(id);
-            data.UserTypes.Remove(u);
-            await data.SaveChangesAsync();
+            UserType u = await _data.UserTypes.FindAsync(id);
+            if (u != null)
+            {
+                _data.UserTypes.Remove(u);
+                await _data.SaveChangesAsync();
+            }
         }
     }
 }

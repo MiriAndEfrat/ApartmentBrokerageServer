@@ -11,35 +11,38 @@ namespace DL
 {
     public class UserDL:IUserDL
     {
-        ApartmentBrokerageContext data;
+        ApartmentBrokerageContext _data;
         public UserDL(ApartmentBrokerageContext data)
         {
-            this.data=data;
+          _data=data;
         }
 
         public async Task PostUser(List<User> user)
         {
             foreach (var u in user)
             {
-                await data.Users.AddAsync(u);
+                await _data.Users.AddAsync(u);
             }
-            await data.SaveChangesAsync();
+            await _data.SaveChangesAsync();
         }
 
 
         public async Task PutUser(int id,List<User> user)
         {
-            List<User> userTypeToRemove =await data.Users.Where(user=> user.PersonId==id).ToListAsync();
-            foreach (var u in userTypeToRemove)
+            List<User> userTypeToRemove =await _data.Users.Where(user=> user.PersonId==id).ToListAsync();
+            if (userTypeToRemove != null)
             {
-                data.Users.Remove(u);
-            }
-            foreach (var u in user)
-            {
-                await data.Users.AddAsync(u);               
-            }
+                foreach (var u in userTypeToRemove)
+                {
+                    _data.Users.Remove(u);
+                }
+                foreach (var u in user)
+                {
+                    await _data.Users.AddAsync(u);
+                }
 
-            await data.SaveChangesAsync();
+                await _data.SaveChangesAsync();
+            }
 
         }
     }

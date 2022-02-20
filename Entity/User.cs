@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 #nullable disable
@@ -18,6 +19,7 @@ namespace Entity
         public int PersonId { get; set; }
         public int UserTypeId { get; set; }
 
+        
 
         [JsonIgnore]
         public virtual Person Person { get; set; }

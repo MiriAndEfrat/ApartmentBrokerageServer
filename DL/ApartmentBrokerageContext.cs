@@ -36,6 +36,9 @@ namespace DL
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
 
+        //add on declaration part
+        public virtual DbSet<Rating> Rating { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -199,7 +202,7 @@ namespace DL
 
                 entity.Property(e => e.Password)
                     .IsRequired()
-                    .HasMaxLength(20)
+                    .HasMaxLength(100)
                     .HasColumnName("password");
 
                 entity.Property(e => e.Phone1)
@@ -230,6 +233,12 @@ namespace DL
                     .HasForeignKey(d => d.StreetId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_person_street");
+
+                entity.Property(e => e.Salt)
+                    //.IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("salt");
+
             });
 
             modelBuilder.Entity<PropertyDetail>(entity =>
@@ -540,9 +549,47 @@ namespace DL
                     .HasColumnName("description");
             });
 
-            OnModelCreatingPartial(modelBuilder);
+
+
+
+
+            modelBuilder.Entity<Rating>(entity =>
+            {
+                entity.ToTable("RATING");
+
+                entity.Property(e => e.RatingId).HasColumnName("RATING_ID");
+
+                entity.Property(e => e.Host)
+                    .HasColumnName("HOST")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Method)
+                    .HasColumnName("METHOD")
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.Path)
+                    .HasColumnName("PATH")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.RecordDate)
+                 .HasColumnName("Record_Date")
+                 .HasColumnType("datetime");
+
+                entity.Property(e => e.Referer)
+                    .HasColumnName("REFERER")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.UserAgent).HasColumnName("USER_AGENT");
+            });
+
+
+        OnModelCreatingPartial(modelBuilder);
         }
 
+
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+
     }
 }

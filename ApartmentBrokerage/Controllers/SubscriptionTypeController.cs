@@ -1,5 +1,6 @@
 ﻿using BL;
 using Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,40 +13,41 @@ namespace ApartmentBrokerage.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SubscriptionTypeController : ControllerBase
     {
-        ISubscriptionTypeBL subscriptionTypeBL;
+        ISubscriptionTypeBL _subscriptionTypeBL;
         public SubscriptionTypeController(ISubscriptionTypeBL subscriptionTypeBL)
         {
-            this.subscriptionTypeBL = subscriptionTypeBL;
+           _subscriptionTypeBL = subscriptionTypeBL;
         }
 
         // GET: api/<SubscriptionTypeController>
         [HttpGet]
         public async Task<List<SubscriptionType>> Get()
         {
-            return await subscriptionTypeBL.GetAll();
+            return await _subscriptionTypeBL.GetAll();
         }
 
         // POST api/<SubscriptionTypeController>
         [HttpPost]
         public async Task Post([FromBody] SubscriptionType subscriptionType)
         {
-            await subscriptionTypeBL.PostSubscriptionType(subscriptionType);
+            await _subscriptionTypeBL.PostSubscriptionType(subscriptionType);
         }
 
         // PUT api/<SubscriptionTypeController>/5
         [HttpPut]
         public async Task Put([FromBody] SubscriptionType subscriptionType)
         {
-            await subscriptionTypeBL.PutSubscriptionType(subscriptionType);
+            await _subscriptionTypeBL.PutSubscriptionType(subscriptionType);
         }
 
         // DELETE api/<SubscriptionTypeController>/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
-            await subscriptionTypeBL.DeleteSubscriptionType(id);
+            await _subscriptionTypeBL.DeleteSubscriptionType(id);
         }
     }
 }

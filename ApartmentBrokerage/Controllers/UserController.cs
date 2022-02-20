@@ -8,6 +8,13 @@ using DTO;
 using AutoMapper;
 using Entity;
 using Microsoft.Extensions.Logging;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,79 +22,80 @@ namespace ApartmentBrokerage.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class UserController : ControllerBase
     {
-        IUserBL userBL;
-        IMapper mapper;
-        ILogger<UserController> logger;
+        IUserBL _userBL;
+       //
+       IMapper _mapper;
+        ILogger<UserController> _logger;
+        //IConfiguration configuration;
 
-
-        public UserController(IUserBL userBL, IMapper mapper,ILogger<UserController> logger)
+        public UserController(IUserBL userBL, ILogger<UserController> logger, IMapper mapper)//*IConfiguration configuration*/
         {
-            this.userBL = userBL;
-            this.mapper = mapper;
-            this.logger = logger;
+            _userBL = userBL;
+            _mapper = mapper;
+            _logger = logger;
+           // this.configuration = configuration;
         }
-                
+
         // GET: api/<UserController>
         [HttpGet]
         public async Task<List<PersonDTO>> Get()
         {
-            try {
-                var people = await userBL.GetAll();
-                var peopleDTO = mapper.Map<List<Person>, List<PersonDTO>>(people);
-                return peopleDTO;
-            }
-            catch(Exception e)
-            {
-                logger.LogError("server wrong");
-            }
-            return null;
+            return await _userBL.GetAll();
+            //var peopleDTO = mapper.Map<List<Person>, List<PersonDTO>>(people);
+            //return WithoutPasswords(peopleDTO);
         }
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
         public async Task<PersonDTO> Get(int id)
         {
-            var person = await userBL.GetById(id);
-            var personDTO = mapper.Map<Person, PersonDTO>(person);
-            return personDTO;            
+            //var person = await userBL.GetById(id);
+            //return WithoutPassword(mapper.Map<Person, PersonDTO>(person));
+            return await  _userBL.GetById(id);
         }
 
         // GET api/<UserController>/5/123
-        [HttpGet("{identity_number}/{password}")]
-        public async Task<PersonDTO> Get(string identity_number, string password)
+        //[HttpGet("{identity_number}/{password}")]
+        //public async Task<PersonDTO> Get(string identity_number, string password)
+        //{
+        //    var person = await userBL.GetByIdNumberAndPassword(identity_number, password);
+        //    return mapper.Map<Person, PersonDTO>(person);
+
+        //}
+        [HttpPost("login")]
+        [AllowAnonymous]
+                
+        public async Task<PersonDTO> Post([FromBody] UserLogInDTO userLogInDTO)
         {
-            var person = await userBL.GetByIdNumberAndPassword(identity_number, password);
-            var personDTO = mapper.Map<Person, PersonDTO>(person);
-            return personDTO;
+            var user = await _userBL.GetByIdNumberAndPassword(userLogInDTO.IdentityNumber, userLogInDTO.Password);
+            return await _userBL.PostLogIn(user);
         }
+
 
         // POST api/<UserController>
         [HttpPost]
+        [AllowAnonymous]
         public async Task<int> Post([FromBody] PersonDTO personDTO)
         {
-            Person person=mapper.Map<PersonDTO,Person>(personDTO);
+            Person person = _mapper.Map<PersonDTO, Person>(personDTO);
             List<int> userType = personDTO.UserType;
-            //foreach (var i in personDTO.UserType)
-            //{
-            //    user.Add(new User { PersonId = personDTO.Id, UserTypeId = i });
-            //}
-            return await userBL.PostUser(person, userType);
-            //await userBL.PostUser(person);
+            return await _userBL.PostUser(person, userType);
         }
 
         // PUT api/<UserController>/5
         [HttpPut]
         public async Task Put([FromBody] PersonDTO personDTO)
         {
-            Person person = mapper.Map<PersonDTO, Person>(personDTO);
+            Person person = _mapper.Map<PersonDTO, Person>(personDTO);
             List<User> user = new List<User>();
             foreach (var i in personDTO.UserType)
             {
                 user.Add(new User { PersonId = person.Id, UserTypeId = i });
             }
-            await userBL.PutUser(person, user);
+            await _userBL.PutUser(person, user);
         }
 
         // DELETE api/<UserController>/5
@@ -95,5 +103,19 @@ namespace ApartmentBrokerage.Controllers
         //public void Delete(int id)
         //{
         //}
+
+
+        //public static List<PersonDTO> WithoutPasswords(List<PersonDTO> users)
+        //{
+        //    return users.Select(x => WithoutPassword(x)).ToList();
+        //}
+
+
+        //public static PersonDTO WithoutPassword(PersonDTO personDTO)
+        //{
+        //    personDTO.Password = null;
+        //    return personDTO;
+        //}
+
     }
 }

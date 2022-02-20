@@ -10,25 +10,25 @@ namespace BL
 {
     public class SubscriberPropertyDetailsBL: ISubscriberPropertyDetailsBL
     {
-        ISubscriberPropertyDetailsDL subscriberPropertyDetailsDL;
+        ISubscriberPropertyDetailsDL _subscriberPropertyDetailsDL;
         public SubscriberPropertyDetailsBL(ISubscriberPropertyDetailsDL subscriberPropertyDetailsDL)
         {
-            this.subscriberPropertyDetailsDL = subscriberPropertyDetailsDL;
+           _subscriberPropertyDetailsDL = subscriberPropertyDetailsDL;
         }
         
         public async Task PostSubscriberPropertyDetails(SubscriberPropertyDetail propertyDetail)
         {
-            await subscriberPropertyDetailsDL.PostSubscriberPropertyDetails(propertyDetail);
+            await _subscriberPropertyDetailsDL.PostSubscriberPropertyDetails(propertyDetail);
         }
 
         public async Task<SubscriberPropertyDetail> GetPropertyDetailsBySubscriberId(int id)
         {
-            return await subscriberPropertyDetailsDL.GetPropertyDetailsBySubscriberId(id);
+            return await _subscriberPropertyDetailsDL.GetPropertyDetailsBySubscriberId(id);
         }
 
         public async Task PutPropertyDetails(SubscriberPropertyDetail property)
         {
-            await subscriberPropertyDetailsDL.PutPropertyDetails(property);
+            await _subscriberPropertyDetailsDL.PutPropertyDetails(property);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace DL
         public Task<List<Person>> GetAll();
 
         public Task<Person> GetById(int id);
-        public Task<Person> GetByIdNumberAndPassword(string identity_number, string password);
+        public Task<Person> GetByIdNumberAndPassword(string identity_number);
         public Task<Person> PostPerson(Person person);
         public Task PutPerson(Person person);
 

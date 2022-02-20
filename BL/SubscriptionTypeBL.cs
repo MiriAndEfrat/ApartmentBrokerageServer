@@ -10,26 +10,26 @@ namespace BL
 {
     public class SubscriptionTypeBL: ISubscriptionTypeBL
     {
-        ISubscriptionTypeDL subscriptionTypeDL;
+        ISubscriptionTypeDL _subscriptionTypeDL;
         public SubscriptionTypeBL(ISubscriptionTypeDL subscriptionTypeDL)
         {
-            this.subscriptionTypeDL = subscriptionTypeDL;
+           _subscriptionTypeDL = subscriptionTypeDL;
         }
         public async Task<List<SubscriptionType>> GetAll()
         {
-            return await subscriptionTypeDL.GetAll();
+            return await _subscriptionTypeDL.GetAll();
         }
         public async Task PostSubscriptionType(SubscriptionType subscriptionType)
         {
-            await subscriptionTypeDL.PostSubscriptionType(subscriptionType);
+            await _subscriptionTypeDL.PostSubscriptionType(subscriptionType);
         }
         public async Task PutSubscriptionType(SubscriptionType subscriptionType)
         {
-            await subscriptionTypeDL.PutSubscriptionType(subscriptionType);
+            await _subscriptionTypeDL.PutSubscriptionType(subscriptionType);
         }
         public async Task DeleteSubscriptionType(int id)
         {
-            await subscriptionTypeDL.DeleteSubscriptionType(id);
+            await _subscriptionTypeDL.DeleteSubscriptionType(id);
         }
 
     }

@@ -8,28 +8,32 @@ using System.Threading.Tasks;
 
 namespace BL
 {
-    public class CityBL: ICityBL
+    public class CityBL : ICityBL
     {
-        ICityDL cityDL;
+        ICityDL _cityDL;
         public CityBL(ICityDL cityDL)
         {
-            this.cityDL = cityDL;
+            _cityDL = cityDL;
         }
         public async Task<List<City>> GetAll()
         {
-            return await cityDL.GetAll();
+            return await _cityDL.GetAll();
+        }
+        public async Task<List<City>> GetByAreaId(int id)
+        {
+            return await _cityDL.GetByAreaId(id);
         }
         public async Task PostCity(City city)
         {
-            await cityDL.PostCity(city);
+            await _cityDL.PostCity(city);
         }
         public async Task PutCity(City city)
         {
-            await cityDL.PutCity(city);
+            await _cityDL.PutCity(city);
         }
         public async Task DeleteCity(int id)
         {
-            await cityDL.DeleteCity(id);
+            await _cityDL.DeleteCity(id);
         }
     }
 }
