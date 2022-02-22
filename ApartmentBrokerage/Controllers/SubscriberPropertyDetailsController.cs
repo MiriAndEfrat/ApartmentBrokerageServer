@@ -20,26 +20,14 @@ namespace ApartmentBrokerage.Controllers
         ISubscriberPropertyDetailsBL _subscriberPropertyDetailsBL;
         ILogger<UserController> _logger;
 
-        //// GET: api/<SubscriptionPerUserController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
+        
         public SubscriberPropertyDetailsController(ISubscriberPropertyDetailsBL subscriberPropertyDetailsBL, ILogger<UserController> logger)
         {
             _subscriberPropertyDetailsBL = subscriberPropertyDetailsBL;
             _logger = logger;
         }
 
-        // GET: api/<SubscriberPropertyDetailsController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
+        
         // GET api/<SubscriberPropertyDetailsController>/5
         [HttpGet("{id}")]
         public async Task<SubscriberPropertyDetail> Get(int id)
@@ -47,23 +35,14 @@ namespace ApartmentBrokerage.Controllers
             return await _subscriberPropertyDetailsBL.GetPropertyDetailsBySubscriberId(id);
         }
 
-        // POST api/<SubscriberPropertyDetailsController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        // PUT api/<SubscriberPropertyDetailsController>/5
+        
+        // PUT api/<SubscriberPropertyDetailsController>
         [HttpPut]
         public async Task Put([FromBody] SubscriberPropertyDetail property)
         {
             await _subscriberPropertyDetailsBL.PutPropertyDetails(property);
         }
 
-        // DELETE api/<SubscriberPropertyDetailsController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        
     }
 }

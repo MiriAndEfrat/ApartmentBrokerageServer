@@ -33,14 +33,7 @@ namespace ApartmentBrokerage.Controllers
             _mapper = mapper;
         }
 
-        //// GET: api/<SubscriptionPerUserController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-
+        
         // GET api/<SubscriptionPerUserController>/5
         [HttpGet("{id}")]
         public async Task<List<SubscriptionPerUser>> Get(int id)
@@ -60,17 +53,7 @@ namespace ApartmentBrokerage.Controllers
             return subscriptionPerUser_id;
         }
 
-        //// PUT api/<SubscriptionPerUserController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE api/<SubscriptionPerUserController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+       
 
     }
 }
