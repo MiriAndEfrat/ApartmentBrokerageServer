@@ -10,12 +10,12 @@ namespace Entity
     {
         public int Id { get; set; }
         public int ApartmentId { get; set; }
-        public int PaymentFormId { get; set; }
+        public int PaymentOptionsId { get; set; }
 
 
         [JsonIgnore]
         public virtual PropertyDetail Apartment { get; set; }
         [JsonIgnore]
-        public virtual PaymentForm PaymentForm { get; set; }
+        public virtual PaymentOption PaymentOptions { get; set; }
     }
 }

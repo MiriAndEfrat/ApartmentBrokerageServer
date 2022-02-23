@@ -23,7 +23,7 @@ namespace DL
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<IdentityType> IdentityTypes { get; set; }
         public virtual DbSet<Neighborhood> Neighborhoods { get; set; }
-        public virtual DbSet<PaymentForm> PaymentForms { get; set; }
+        public virtual DbSet<PaymentOption> PaymentOptions { get; set; }
         public virtual DbSet<PaymentPerProperty> PaymentPerProperties { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<PropertyDetail> PropertyDetails { get; set; }
@@ -131,9 +131,9 @@ namespace DL
                     .HasConstraintName("FK_neighborhood_city");
             });
 
-            modelBuilder.Entity<PaymentForm>(entity =>
+            modelBuilder.Entity<PaymentOption>(entity =>
             {
-                entity.ToTable("payment_form");
+                entity.ToTable("payment_option");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -151,7 +151,7 @@ namespace DL
 
                 entity.Property(e => e.ApartmentId).HasColumnName("apartment_id");
 
-                entity.Property(e => e.PaymentFormId).HasColumnName("payment_form_id");
+                entity.Property(e => e.PaymentOptionsId).HasColumnName("payment_option_id");
 
                 entity.HasOne(d => d.Apartment)
                     .WithMany(p => p.PaymentPerProperties)
@@ -159,11 +159,11 @@ namespace DL
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_payment_per_property_property_details");
 
-                entity.HasOne(d => d.PaymentForm)
+                entity.HasOne(d => d.PaymentOptions)
                     .WithMany(p => p.PaymentPerProperties)
-                    .HasForeignKey(d => d.PaymentFormId)
+                    .HasForeignKey(d => d.PaymentOptionsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_payment_per_property_payment_form");
+                    .HasConstraintName("FK_payment_per_property_payment_option");
             });
 
             modelBuilder.Entity<Person>(entity =>

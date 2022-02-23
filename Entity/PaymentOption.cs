@@ -6,9 +6,9 @@ using System.Text.Json.Serialization;
 
 namespace Entity
 {
-    public partial class PaymentForm
+    public partial class PaymentOption
     {
-        public PaymentForm()
+        public PaymentOption()
         {
             PaymentPerProperties = new HashSet<PaymentPerProperty>();
         }

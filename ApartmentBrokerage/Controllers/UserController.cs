@@ -57,14 +57,6 @@ namespace ApartmentBrokerage.Controllers
             return await  _userBL.GetById(id);
         }
 
-        // GET api/<UserController>/5/123
-        //[HttpGet("{identity_number}/{password}")]
-        //public async Task<PersonDTO> Get(string identity_number, string password)
-        //{
-        //    var person = await userBL.GetByIdNumberAndPassword(identity_number, password);
-        //    return mapper.Map<Person, PersonDTO>(person);
-
-        //}
         [HttpPost("login")]
         [AllowAnonymous]
                 
