@@ -64,6 +64,7 @@ namespace ApartmentBrokerage.Controllers
         {
             var user = await _userBL.GetByIdNumberAndPassword(userLogInDTO.IdentityNumber, userLogInDTO.Password);
             return await _userBL.PostLogIn(user);
+            
         }
 
 

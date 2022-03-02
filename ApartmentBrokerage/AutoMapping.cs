@@ -20,6 +20,10 @@ namespace ApartmentBrokerage
             .ForMember(dest => dest.UserType,
                        opts => opts.MapFrom(src => src.Users.Select(u => u.UserTypeId).ToList())).ReverseMap();
 
+            //CreateMap<PersonDTO, Person>()
+            //.ForMember(dest => dest.UserType,
+            //           opts => opts.MapFrom(src => src.Users.Select(u => u.UserTypeId).ToList())).ReverseMap();
+
             CreateMap<SubscriptionPerUser, SubscriptionAndPropertyDetailsDTO>()
             .ForMember(dest => dest.SubscriptionPerUserId,
                        opts => opts.MapFrom(src => src.Id)).ReverseMap();
