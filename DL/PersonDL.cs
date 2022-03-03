@@ -49,9 +49,14 @@ namespace DL
 
         public async Task PutPerson(Person person)
         {
+
             Person p = await _data.People.FindAsync(person.Id);
             if (p != null)
             {
+                if (person.Password == null)
+                {
+                    person.Password = p.Password;
+                }
                 _data.Entry(p).CurrentValues.SetValues(person);
                 await _data.SaveChangesAsync();
             }
