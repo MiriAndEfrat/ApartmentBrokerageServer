@@ -145,7 +145,7 @@ namespace ApartmentBrokerage
 
             if (env.IsDevelopment())
             {
-                app.UseLoggerMiddleware();
+                //app.UseLoggerMiddleware();
 
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
