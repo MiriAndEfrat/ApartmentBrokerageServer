@@ -18,6 +18,7 @@ namespace DL
         public async Task<List<City>> GetAll()
         {
             return await data.Cities.Include(c => c.AreaPerCities).ToListAsync();
+            
         }
 
         public async Task<List<City>> GetByAreaId(int id)

@@ -27,6 +27,11 @@ namespace BL
             return await _subscriptionPerUserDL.PostSubscriptionPerUser(subscription);
         }
 
+        public async Task PutSubscriptionPerUser(SubscriptionPerUser subscription)
+        {
+            await _subscriptionPerUserDL.PutSubscriptionPerUser(subscription);
+        }
+
     }
 
 }

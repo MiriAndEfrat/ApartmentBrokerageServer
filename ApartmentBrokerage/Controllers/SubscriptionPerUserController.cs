@@ -53,7 +53,14 @@ namespace ApartmentBrokerage.Controllers
             return subscriptionPerUser_id;
         }
 
-       
+        
+        [HttpPut]
+        public async Task Put([FromBody] SubscriptionPerUser subscriptionPerUser)
+        {
+            await _subscriptionPerUserBL.PutSubscriptionPerUser(subscriptionPerUser);
+        }
+
+
 
     }
 }

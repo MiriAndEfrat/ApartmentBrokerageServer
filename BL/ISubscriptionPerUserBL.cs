@@ -11,6 +11,7 @@ namespace BL
     {
         public Task<List<SubscriptionPerUser>> GetSubscriptionsById(int id);
         public Task<int> PostSubscriptionPerUser(SubscriptionPerUser subscription);
+        public Task PutSubscriptionPerUser(SubscriptionPerUser subscription);
 
 
     }

@@ -35,6 +35,7 @@ namespace DL
         public virtual DbSet<SubscriptionType> SubscriptionTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
+        public virtual DbSet<CodeTable> TableCode { get; set; }
 
         //add on declaration part
         public virtual DbSet<Rating> Rating { get; set; }
@@ -583,8 +584,19 @@ namespace DL
                 entity.Property(e => e.UserAgent).HasColumnName("USER_AGENT");
             });
 
+            modelBuilder.Entity<CodeTable>(entity =>
+            {
+                entity.ToView("v_table_code");
 
-        OnModelCreatingPartial(modelBuilder);
+                entity.HasNoKey();
+
+                entity.Property(e => e.TableId).HasColumnName("tableId");
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Description).HasColumnName("description");
+            });
+
+
+            OnModelCreatingPartial(modelBuilder);
         }
 
 

@@ -126,6 +126,9 @@ namespace ApartmentBrokerage
             services.AddScoped(typeof(IRatingBL), typeof(RatingBL));
             services.AddScoped(typeof(IRatingDL), typeof(RatingDL));
 
+            services.AddScoped(typeof(ICodeTableBL), typeof(CodeTableBL));
+            services.AddScoped(typeof(ICodeTableDL), typeof(CodeTableDL));
+
             services.AddDbContext<ApartmentBrokerageContext>(options => options.UseSqlServer(
                Configuration.GetConnectionString("srv2\\pupils")), ServiceLifetime.Scoped);
 

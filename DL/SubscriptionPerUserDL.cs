@@ -24,11 +24,26 @@ namespace DL
 
         public async Task<int> PostSubscriptionPerUser(SubscriptionPerUser subscription)
         {
+            SubscriptionType subscriptionType = await _data.SubscriptionTypes.FindAsync(subscription.SubscriptionTypeId);
+            subscription.EndDate = subscription.StartDate.AddDays(subscriptionType.DaysNumber);
+
             await _data.SubscriptionPerUsers.AddAsync(subscription);
             await _data.SaveChangesAsync();
             var s = await _data.SubscriptionPerUsers.MaxAsync(s => s.Id);
             return s;
         }
 
+        public async Task PutSubscriptionPerUser(SubscriptionPerUser subscription)
+        {
+            SubscriptionType subscriptionType = await _data.SubscriptionTypes.FindAsync(subscription.SubscriptionTypeId);
+            subscription.EndDate = subscription.StartDate.AddDays(subscriptionType.DaysNumber);
+
+            SubscriptionPerUser s = await _data.SubscriptionPerUsers.FindAsync(subscription.Id);
+            if (s != null)
+            {
+                _data.Entry(s).CurrentValues.SetValues(subscription);
+                await _data.SaveChangesAsync();
+            }
+        }
     }
 }

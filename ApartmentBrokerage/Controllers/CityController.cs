@@ -22,16 +22,15 @@ namespace ApartmentBrokerage.Controllers
         {
             _cityBL = cityBL;
         }
-
         // GET: api/<CityController>
         [HttpGet]
         public async Task<List<City>> Get()
         {
-            //List<City> l = await cityBL.GetAll();
             return await _cityBL.GetAll();
         }
 
         [HttpGet("{id}")]
+
         public async Task<List<City>> Get(int id)
         {
             //List<City> l = await cityBL.GetAll();
