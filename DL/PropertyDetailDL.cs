@@ -18,11 +18,10 @@ namespace DL
 
         public async Task<List<PropertyDetail>> GetByArea(int id)
         {
-            var properties = await _data.PropertyDetails.Include(p=>p.Street.City.AreaPerCities.Where(c=>c.AreaId==id)).ToListAsync();
+            return await _data.PropertyDetails.Include(p=>p.Street.City.AreaPerCities.Where(c=>c.AreaId==id)).ToListAsync();
            
             
 
-            return  null;
 
         }
         public async Task<List<PropertyDetail>> GetByUserId(int id)
